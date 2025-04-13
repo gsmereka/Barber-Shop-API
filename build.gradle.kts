@@ -62,6 +62,8 @@ tasks.named("build") {
 	}
 }
 
+//	./gradlew generateFlywayMigration -PmigrationName="create_table_name"
+
 tasks.register("generateFlywayMigrationFile"){
 
 	description = "Generate flyway migration"
