@@ -45,9 +45,9 @@ public class ClientEntity {
     @Column(nullable = false, length = 11, columnDefinition = "bpchar(11)")
     private String phone;
 
-//    @ToString.Exclude
-//    @OneToMany(mappedBy = "client", cascade = ALL, orphanRemoval = true)
-//    private Set<ScheduleEntity> schedules = new HashSet<>();
+    @ToString.Exclude
+    @OneToMany(mappedBy = "client", cascade = ALL, orphanRemoval = true)
+    private Set<ScheduleEntity> schedules = new HashSet<>();
 
     @Override
     public boolean equals(final Object o) {
