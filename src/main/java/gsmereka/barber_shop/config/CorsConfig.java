@@ -31,4 +31,5 @@ public class CorsConfig {
 
         return bean;
     }
+
 }
