@@ -1,5 +1,9 @@
 package gsmereka.barber_shop.controller;
 
+import gsmereka.barber_shop.controller.request.SaveScheduleRequest;
+import gsmereka.barber_shop.controller.response.SaveScheduleResponse;
+import gsmereka.barber_shop.controller.response.ScheduleAppointmentMonthResponse;
+import gsmereka.barber_shop.mapper.IScheduleMapper;
 import gsmereka.barber_shop.service.IScheduleService;
 import gsmereka.barber_shop.service.query.IScheduleQueryService;
 import jakarta.validation.Valid;
@@ -26,15 +30,15 @@ public class ScheduleController {
 
     private final IScheduleService service;
     private final IScheduleQueryService queryService;
-//    private final IScheduleMapper mapper;
+    private final IScheduleMapper mapper;
 
-//    @PostMapping
-//    @ResponseStatus(CREATED)
-//    SaveScheduleResponse save(@RequestBody @Valid SaveScheduleRequest request){
-//        var entity = mapper.toEntity(request);
-//        service.save(entity);
-//        return mapper.toSaveResponse(entity);
-//    }
+    @PostMapping
+    @ResponseStatus(CREATED)
+    SaveScheduleResponse save(@RequestBody @Valid SaveScheduleRequest request){
+        var entity = mapper.toEntity(request);
+        service.save(entity);
+        return mapper.toSaveResponse(entity);
+    }
 
     @DeleteMapping("{id}")
     @ResponseStatus(NO_CONTENT)
@@ -42,16 +46,16 @@ public class ScheduleController {
         service.delete(id);
     }
 
-//    @GetMapping("{year}/{month}")
-//    ScheduleAppointmentMonthResponse listMonth(@PathVariable final int year, @PathVariable final int month){
-//        var yearMonth = YearMonth.of(year, month);
-//        var startAt = yearMonth.atDay(1)
-//                .atTime(0, 0, 0, 0)
-//                .atOffset(UTC);
-//        var endAt = yearMonth.atEndOfMonth()
-//                .atTime(23, 59, 59, 999_999_999)
-//                .atOffset(UTC);
-//        var entities = queryService.findInMonth(startAt, endAt);
-//        return mapper.toMonthResponse(year, month, entities);
-//    }
+    @GetMapping("{year}/{month}")
+    ScheduleAppointmentMonthResponse listMonth(@PathVariable final int year, @PathVariable final int month){
+        var yearMonth = YearMonth.of(year, month);
+        var startAt = yearMonth.atDay(1)
+                .atTime(0, 0, 0, 0)
+                .atOffset(UTC);
+        var endAt = yearMonth.atEndOfMonth()
+                .atTime(23, 59, 59, 999_999_999)
+                .atOffset(UTC);
+        var entities = queryService.findInMonth(startAt, endAt);
+        return mapper.toMonthResponse(year, month, entities);
+    }
 }

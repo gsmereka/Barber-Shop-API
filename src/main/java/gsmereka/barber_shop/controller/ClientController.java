@@ -1,5 +1,12 @@
 package gsmereka.barber_shop.controller;
 
+import gsmereka.barber_shop.controller.request.SaveClientRequest;
+import gsmereka.barber_shop.controller.request.UpdateClientRequest;
+import gsmereka.barber_shop.controller.response.ClientDetailResponse;
+import gsmereka.barber_shop.controller.response.ListClientResponse;
+import gsmereka.barber_shop.controller.response.SaveClientResponse;
+import gsmereka.barber_shop.controller.response.UpdateClientResponse;
+import gsmereka.barber_shop.mapper.IClientMapper;
 import gsmereka.barber_shop.service.IClientService;
 import gsmereka.barber_shop.service.query.IClientQueryService;
 import jakarta.validation.Valid;
@@ -26,22 +33,22 @@ public class ClientController {
 
     private final IClientService service;
     private final IClientQueryService queryService;
-//    private final IClientMapper mapper;
+    private final IClientMapper mapper;
 
-//    @PostMapping
-//    @ResponseStatus(CREATED)
-//    SaveClientResponse save(@RequestBody @Valid final SaveClientRequest request){
-//        var entity = mapper.toEntity(request);
-//        service.save(entity);
-//        return mapper.toSaveResponse(entity);
-//    }
+    @PostMapping
+    @ResponseStatus(CREATED)
+    SaveClientResponse save(@RequestBody @Valid final SaveClientRequest request){
+        var entity = mapper.toEntity(request);
+        service.save(entity);
+        return mapper.toSaveResponse(entity);
+    }
 
-//    @PutMapping("{id}")
-//    UpdateClientResponse update(@PathVariable final long id, @RequestBody @Valid final UpdateClientRequest request){
-//        var entity = mapper.toEntity(id, request);
-//        service.update(entity);
-//        return mapper.toUpdateResponse(entity);
-//    }
+    @PutMapping("{id}")
+    UpdateClientResponse update(@PathVariable final long id, @RequestBody @Valid final UpdateClientRequest request){
+        var entity = mapper.toEntity(id, request);
+        service.update(entity);
+        return mapper.toUpdateResponse(entity);
+    }
 
     @DeleteMapping("{id}")
     @ResponseStatus(NO_CONTENT)
@@ -49,16 +56,16 @@ public class ClientController {
         service.delete(id);
     }
 
-//    @GetMapping("{id}")
-//    ClientDetailResponse findById(@PathVariable final long id){
-//        var entity = queryService.findById(id);
-//        return mapper.toDetailResponse(entity);
-//    }
+    @GetMapping("{id}")
+    ClientDetailResponse findById(@PathVariable final long id){
+        var entity = queryService.findById(id);
+        return mapper.toDetailResponse(entity);
+    }
 
-//    @GetMapping
-//    List<ListClientResponse> list(){
-//        var entities = queryService.list();
-//        return mapper.toListResponse(entities);
-//    }
+    @GetMapping
+    List<ListClientResponse> list(){
+        var entities = queryService.list();
+        return mapper.toListResponse(entities);
+    }
 
 }
