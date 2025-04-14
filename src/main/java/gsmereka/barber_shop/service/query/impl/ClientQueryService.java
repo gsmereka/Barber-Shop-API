@@ -1,10 +1,11 @@
 package gsmereka.barber_shop.service.query.impl;
 
 import gsmereka.barber_shop.entity.ClientEntity;
+import gsmereka.barber_shop.exception.NotFoundException;
+import gsmereka.barber_shop.exception.PhoneInUseException;
 import gsmereka.barber_shop.repository.IClientRepository;
 import gsmereka.barber_shop.service.query.IClientQueryService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class ClientQueryService implements IClientQueryService {
     @Override
     public ClientEntity findById(final long id) {
         return repository.findById(id).orElseThrow(
-//                () -> new ChangeSetPersister.NotFoundException("Não foi encontrado o cliente de id " + id)
+                () -> new NotFoundException("Não foi encontrado o cliente de id " + id)
         );
     }
 
@@ -32,7 +33,7 @@ public class ClientQueryService implements IClientQueryService {
     public void verifyPhone(final String phone) {
         if (repository.existsByPhone(phone)) {
             var message = "O telefone " + phone + " já está em uso";
-//            throw new PhoneInUseException(message);
+            throw new PhoneInUseException(message);
         }
     }
 
@@ -41,7 +42,7 @@ public class ClientQueryService implements IClientQueryService {
         var optional = repository.findByPhone(phone);
         if (optional.isPresent() && !Objects.equals(optional.get().getPhone(), phone)) {
             var message = "O telefone " + phone + " já está em uso";
-//            throw new PhoneInUseException(message);
+            throw new PhoneInUseException(message);
         }
     }
 
@@ -49,7 +50,7 @@ public class ClientQueryService implements IClientQueryService {
     public void verifyEmail(final String email) {
         if (repository.existsByEmail(email)) {
             var message = "O e-mail " + email + " já está em uso";
-//            throw new PhoneInUseException(message);
+            throw new PhoneInUseException(message);
         }
     }
 
@@ -58,7 +59,7 @@ public class ClientQueryService implements IClientQueryService {
         var optional = repository.findByEmail(email);
         if (optional.isPresent() && !Objects.equals(optional.get().getPhone(), email)) {
             var message = "O e-mail " + email + " já está em uso";
-//            throw new PhoneInUseException(message);
+            throw new PhoneInUseException(message);
         }
     }
 }
